@@ -7,7 +7,8 @@
     "build": "npx tsc",
     "start": "node dist/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
-    "prod": "npm run build && npm run start"
+    "prod": "npm run build && npm run start",
+    "deploy": "docker build --platform=linux/amd64 . -t  maestr0admin/maestro-node && docker push maestr0admin/maestro-node && ssh root@143.110.225.232 "
   },
   "keywords": [],
   "author": "",
@@ -34,3 +35,4 @@
     "typescript": "^4.8.3"
   }
 }
+
