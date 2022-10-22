@@ -4,7 +4,15 @@ dotenv.config();
 import "./src/config/mongoose";
 import "./src/config/configureFirebase";
 import apiRouter from "./src/routes/ApiRouter";
-import cors from 'cors'
+import cors from "cors";
+import http from "http";
+import https from "https";
+import fs from "fs";
+
+var options = {
+  key: fs.readFileSync("./client-key.pem"),
+  cert: fs.readFileSync("./client-cert.pem"),
+};
 const port = process.env.PORT;
 
 const app: Express = express();
@@ -17,7 +25,15 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use("/api", apiRouter);
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
-});
+
+
+
+// Create an HTTP service.
+http.createServer(app).listen(80);
+// Create an HTTPS service identical to the HTTP service.
+https.createServer(options, app).listen(port);
+
+// app.listen(port, () => {
+//   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
+// });
 
