@@ -4,12 +4,17 @@ import IUser from "../types/User";
 // 2. Create a Schema corresponding to the document interface.
 const userSchema = new Schema<IUser>(
   {
-    name: { type: String, required: true },
+    name: { type: String },
+    type: { type: String, required: true },
     phoneNumber: {
       type: String,
-      required: [true, "Phone number is required to create user"],
       unique: true,
     },
+    email: {
+      type: String,
+      unique: true,
+    },
+    uid: { type: String, required: true, unique: true },
     avatar: String,
   },
   {

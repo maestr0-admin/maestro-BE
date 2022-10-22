@@ -23,20 +23,52 @@ class UserController {
     });
   }
 
-  async signUp(req: Request<{}, any, IUser>, res: Response<any, IAuthLocals>) {
-    const { phone, uid } = res.locals.user;
+  async getCurrentUser(
+    req: Request<{}, any, IUser>,
+    res: Response<any, IAuthLocals>
+  ) {
+    const { phone, uid, email } = res.locals.user;
     let userDoc = await User.findOne({
-      phoneNumber: phone,
-    });
-    if (!userDoc) {
-      return res.status(401).send({
-        code: "phone_not_found",
-        message: "Phone number is not added by admins",
-      });
-    }
-    await userDoc.update({
       uid,
     });
+    return res.status(200).json({
+      user: userDoc,
+    });
+  }
+
+  async signUp(
+    req: Request<{}, any, { accountType: "athlete" | "brand" }>,
+    res: Response<any, IAuthLocals>
+  ) {
+    const { phone, uid, email } = res.locals.user;
+    console.log(res.locals.user)
+    console.log('res.locals.user')
+    const { accountType } = req.body;
+    if (accountType === "athlete") {
+      let userDoc = await User.findOne({
+        phoneNumber: phone,
+      });
+      if (!userDoc) {
+        return res.status(401).send({
+          code: "phone_not_found",
+          message: "Phone number is not added by admins",
+        });
+      }
+      await userDoc.updateOne({
+        $set: {
+          uid,
+          phoneNumber: phone,
+          type: "athlete",
+        },
+      });
+    } else {
+      await User.create({
+        email,
+        uid,
+        type: "brand",
+      });
+    }
+
     return res.status(200).send({
       code: "sign_up_success",
       message: "Sign up successfull",

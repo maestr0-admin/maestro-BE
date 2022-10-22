@@ -1,7 +1,8 @@
 interface IAuthLocals {
   user: {
     uid: string;
-    phone: string;
+    phone?: string;
+    email?:string
   };
 }
 

@@ -9,7 +9,6 @@ async function authenticateIdToken(
   next: NextFunction
 ) {
   const idToken = req.headers.authorization?.split(" ")[1];
-
   if (!idToken)
     return res.status(401).json({ status: "error", code: "unauthorized" });
   try {
@@ -17,6 +16,7 @@ async function authenticateIdToken(
     res.locals.user = {
       uid: result.uid,
       phone: result.phone_number,
+      email:result.email
     };
     return next();
   } catch (err) {
