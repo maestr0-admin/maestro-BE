@@ -10,12 +10,7 @@ import https from "https";
 import fs from "fs";
 import path from "path";
 
-var options = {
-  key: fs.readFileSync(path.join(__dirname, "./key.pem")),
-  cert: fs.readFileSync(path.join(__dirname, "./cert.pem")),
-  requestCert: false,
-  rejectUnauthorized: false
-};
+
 const port = process.env.PORT;
 
 const app: Express = express();
