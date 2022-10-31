@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-const connection = process.env.MONGODB_CONNECTION_STRING_TEST!;
+const connection = process.env.MONGODB_CONNECTION_STRING!;
 
 mongoose
   .connect(connection, {
@@ -12,6 +12,5 @@ mongoose
   })
   .catch((err) => {
     console.log(err);
-    console.log("hata burada")
   });
 
