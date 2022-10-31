@@ -22,7 +22,7 @@ class AthleteController {
     });
   }
 
-  async getAthlete(req: Request, res: Response<any, IAuthLocals>) {
+  async getAthletes(req: Request, res: Response<any, IAuthLocals>) {
     let athleteDocs = await Athletes.find();
     return res.status(200).json({
       athletes: athleteDocs,

@@ -5,6 +5,6 @@ const apiRouter = Router();
 
 apiRouter.post("", AthleteController.createAthlete);
 
-apiRouter.get("", AthleteController.getAthlete);
+apiRouter.get("", AthleteController.getAthletes);
 
 export default apiRouter;
