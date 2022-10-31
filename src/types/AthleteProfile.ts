@@ -1,7 +1,8 @@
 import IStat from "./Stat";
+import ISocialMedia from './SocialMedia';
+
 
 interface IAthleteProfile {
-  id: string;
   type: "elite" | "select" | "recruit";
   rating:number;
   shopLink: string;
@@ -12,10 +13,10 @@ interface IAthleteProfile {
   marketability: string;
   reach: string;
   tags: string[];
-  instagram: string;
-  tiktok:string;
-  twitter:string;
-  youtube:string;
+  instagram: ISocialMedia[];
+  tiktok:ISocialMedia[];
+  twitter:ISocialMedia[];
+  youtube:ISocialMedia[];
   stats: IStat[];
   skillsAndInterests: string[];
   backgroungImage:string;

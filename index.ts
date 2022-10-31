@@ -4,6 +4,7 @@ dotenv.config();
 import "./src/config/mongoose";
 import "./src/config/configureFirebase";
 import apiRouter from "./src/routes/ApiRouter";
+import athleteRouter from "./src/routes/AthleteRouter";
 import cors from "cors";
 import http from "http";
 import https from "https";
@@ -22,6 +23,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use("/api", apiRouter);
+app.use("/athlete", athleteRouter);
 
 // // Create an HTTP service.
 // http.createServer(app).listen(port);

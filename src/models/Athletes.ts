@@ -1,8 +1,19 @@
 import { Schema, model, connect } from "mongoose";
 import IAthleteProfile from "./../types/AthleteProfile";
+import IStat from './../types/Stat';
+import ISocialMedia from './../types/SocialMedia';
+
+const statSchema = new Schema<IStat>({
+  name:{type:String,required:true},
+  value:{type:String,required:true}
+})
+
+const socialSchema = new Schema<ISocialMedia>({
+  link:{type:String,required:true},
+  followerCount:{type:String,required:true}
+})
 
 const athleteSchema = new Schema<IAthleteProfile>({
-  id: { type: String, required: true, unique: true },
   type: { type: String, required: true },
   rating: { type: Number, required: true },
   shopLink: { type: String, required: true },
@@ -13,13 +24,13 @@ const athleteSchema = new Schema<IAthleteProfile>({
   marketability: { type: String, required: true },
   reach: { type: String, required: true },
   tags: { type: [String], required: true },
-  instagram: { type: String, required: true },
-  tiktok: { type: String, required: true },
-  twitter: { type: String, required: true },
-  youtube: { type: String, required: true },
-  stats: { type: [String], required: true },
+  instagram: { type: [socialSchema], required: true },
+  tiktok: { type: [socialSchema], required: true },
+  twitter: { type: [socialSchema], required: true },
+  youtube: { type: [socialSchema], required: true },
+  stats: [statSchema],
   skillsAndInterests: { type: [String], required: true },
-  backgroungImage: { type: String, required: true },
+  backgroungImage: { type: String, required: true, default: "No Image" },
 });
 
 const Athletes = model<IAthleteProfile>("Athlet", athleteSchema);
