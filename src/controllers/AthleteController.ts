@@ -26,9 +26,9 @@ class AthleteController {
     req: Request,
     res: Response<any, IAuthLocals>
   ) {
-    let athleteDoc = await Athletes.find();
+    let athleteDocs = await Athletes.find();
     return res.status(200).json({
-      athlete: athleteDoc,
+      athletes: athleteDocs,
     });
   }
 }
