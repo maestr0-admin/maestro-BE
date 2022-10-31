@@ -8,10 +8,9 @@ const s3 = new AWS.S3({
   endpoint: spacesEndpoint,
   accessKeyId: process.env.DO_SPACES_KEY,
   secretAccessKey: process.env.DO_SPACES_SECRET,
-  
 });
 
-const whitelist = ["image/png", "image/jpeg", "image/jpg"];
+const whitelist = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
 
 const upload = multer({
   storage: multerS3({

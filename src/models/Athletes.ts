@@ -1,17 +1,17 @@
 import { Schema, model, connect } from "mongoose";
 import IAthleteProfile from "./../types/AthleteProfile";
-import IStat from './../types/Stat';
-import ISocialMedia from './../types/SocialMedia';
+import IStat from "./../types/Stat";
+import ISocialMedia from "./../types/SocialMedia";
 
 const statSchema = new Schema<IStat>({
-  name:{type:String,required:true},
-  value:{type:String,required:true}
-})
+  name: { type: String, required: true },
+  value: { type: String, required: true },
+});
 
 const socialSchema = new Schema<ISocialMedia>({
-  link:{type:String,required:true},
-  followerCount:{type:String,required:true}
-})
+  link: { type: String, required: true },
+  followerCount: { type: String, required: true },
+});
 
 const athleteSchema = new Schema<IAthleteProfile>({
   type: { type: String, required: true },
@@ -30,7 +30,7 @@ const athleteSchema = new Schema<IAthleteProfile>({
   youtube: { type: [socialSchema], required: true },
   stats: [statSchema],
   skillsAndInterests: { type: [String], required: true },
-  backgroundImage: { type: String, required: true, default: "No Image" },
+  backgroundImage: { type: String, required: true, default:"https://i.stack.imgur.com/l60Hf.png"},
 });
 
 const Athletes = model<IAthleteProfile>("Athlet", athleteSchema);
