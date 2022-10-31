@@ -10,7 +10,6 @@ import https from "https";
 import fs from "fs";
 import path from "path";
 
-
 const port = process.env.PORT;
 
 const app: Express = express();
@@ -32,4 +31,3 @@ app.use("/api", apiRouter);
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
-
