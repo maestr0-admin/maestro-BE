@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { sendValidationError } from "../helpers/requestHelpers";
 import Athletes from "../models/Athletes";
 import IAthleteProfile from "../types/AthleteProfile";
+import IAuthLocals from './../types/AuthLocals';
 
 class AthleteController {
   async createAthlete(
@@ -22,8 +23,8 @@ class AthleteController {
   }
 
   async getAthlete(
-    req: Request<{}, any, IAthleteProfile>,
-    res: Response<any, IAthleteProfile>
+    req: Request,
+    res: Response<any, IAuthLocals>
   ) {
     let athleteDoc = await Athletes.find();
     return res.status(200).json({
