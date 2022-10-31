@@ -19,7 +19,7 @@ interface IAthleteProfile {
   youtube:ISocialMedia[];
   stats: IStat[];
   skillsAndInterests: string[];
-  backgroungImage:string;
+  backgroundImage:string;
 }
 
 export default IAthleteProfile;

@@ -20,6 +20,16 @@ class AthleteController {
       message: "Athlete created",
     });
   }
+
+  async getAthlete(
+    req: Request<{}, any, IAthleteProfile>,
+    res: Response<any, IAthleteProfile>
+  ) {
+    let athleteDoc = await Athletes.find();
+    return res.status(200).json({
+      athlete: athleteDoc,
+    });
+  }
 }
 
 export default new AthleteController();

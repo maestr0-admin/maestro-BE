@@ -3,8 +3,8 @@ import AthleteController from "../controllers/AthleteController";
 
 const apiRouter = Router();
 
-apiRouter.post("/create-athlete", AthleteController.createAthlete);
+apiRouter.post("", AthleteController.createAthlete);
 
-
+apiRouter.get("", AthleteController.getAthlete);
 
 export default apiRouter;

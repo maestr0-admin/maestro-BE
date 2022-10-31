@@ -30,7 +30,7 @@ const athleteSchema = new Schema<IAthleteProfile>({
   youtube: { type: [socialSchema], required: true },
   stats: [statSchema],
   skillsAndInterests: { type: [String], required: true },
-  backgroungImage: { type: String, required: true, default: "No Image" },
+  backgroundImage: { type: String, required: true, default: "No Image" },
 });
 
 const Athletes = model<IAthleteProfile>("Athlet", athleteSchema);
