@@ -7,4 +7,6 @@ apiRouter.post("", AthleteController.createAthlete);
 
 apiRouter.get("", AthleteController.getAthletes);
 
+apiRouter.get("/filters", AthleteController.getFiltersData);
+
 export default apiRouter;

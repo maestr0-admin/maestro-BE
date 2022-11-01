@@ -28,6 +28,41 @@ class AthleteController {
       athletes: athleteDocs,
     });
   }
+
+  async getFiltersData(req: Request, res: Response<any, IAuthLocals>) {
+    try {
+      const data = await Athletes.aggregate([
+        {
+          $group: {
+            _id: {
+              school: "$school",
+              hometown: "$hometown",
+              tags: "$tags",
+              skillsAndInterests: "$skillsAndInterests",
+            },
+          },
+        },
+      ]);
+      const schools = [];
+      const hometowns=[];
+      const tags = [];
+      const skillsAndInterests=[]
+      for (const value of data) {
+        schools.push(value._id.school);
+        hometowns.push(value._id.hometown)
+        tags.push(value._id.tags)
+        skillsAndInterests.push(value._id.skillsAndInterests)
+      }
+      return res.status(200).json({
+        schools,
+        hometowns,
+        tags:[...new Set(tags.flat(Infinity))],
+        skillsAndInterests:[...new Set(skillsAndInterests.flat(Infinity))]
+      });
+    } catch (err: any) {
+      return sendValidationError(res, err);
+    }
+  }
 }
 
 export default new AthleteController();
