@@ -18,7 +18,7 @@ class AthleteController {
       return sendValidationError(res, err);
     }
     return res.status(200).json({
-      message: "Athlete created",
+      message: "Athlete createdd",
     });
   }
 
