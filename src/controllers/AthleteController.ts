@@ -4,6 +4,11 @@ import Athletes from "../models/Athletes";
 import IAthleteProfile from "../types/AthleteProfile";
 import IAuthLocals from "./../types/AuthLocals";
 
+interface GetAtletesQuery {
+  page?: string;
+  limit?: string;
+}
+
 class AthleteController {
   async createAthlete(
     req: Request<{}, any, IAthleteProfile>,
@@ -22,8 +27,13 @@ class AthleteController {
     });
   }
 
-  async getAthletes(req: Request, res: Response<any, IAuthLocals>) {
-    let athleteDocs = await Athletes.find();
+  async getAthletes(req: Request<{}, {}, {}, GetAtletesQuery>, res: Response) {
+    const page = +(req.query.page || 1);
+    const limit = +(req.query.limit || 3);
+
+    let athleteDocs = await Athletes.find()
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
     return res.status(200).json({
       athletes: athleteDocs,
     });
@@ -44,20 +54,20 @@ class AthleteController {
         },
       ]);
       const schools = [];
-      const hometowns=[];
+      const hometowns = [];
       const tags = [];
-      const skillsAndInterests=[]
+      const skillsAndInterests = [];
       for (const value of data) {
         schools.push(value._id.school);
-        hometowns.push(value._id.hometown)
-        tags.push(value._id.tags)
-        skillsAndInterests.push(value._id.skillsAndInterests)
+        hometowns.push(value._id.hometown);
+        tags.push(value._id.tags);
+        skillsAndInterests.push(value._id.skillsAndInterests);
       }
       return res.status(200).json({
         schools,
         hometowns,
-        tags:[...new Set(tags.flat(Infinity))],
-        skillsAndInterests:[...new Set(skillsAndInterests.flat(Infinity))]
+        tags: [...new Set(tags.flat(Infinity))],
+        skillsAndInterests: [...new Set(skillsAndInterests.flat(Infinity))],
       });
     } catch (err: any) {
       return sendValidationError(res, err);
