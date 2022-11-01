@@ -1,16 +1,19 @@
 import { Request, Response } from "express";
 import { sendValidationError } from "../helpers/requestHelpers";
-import Athletes from "../models/Athletes";
+import Athlete from "../models/Athlete";
 import IAthleteProfile from "../types/AthleteProfile";
 import IAuthLocals from "./../types/AuthLocals";
-
-interface GetAtletesQuery {
+import queryString from "query-string";
+import { FilterQuery } from "mongoose";
+interface GetAthletesQuery {
   page?: string;
   limit?: string;
   /*   minFollowers?: string;
   maxFollowers?: string; */
-  hometown?: string;
-  school?: string;
+  hometowns?: string;
+  schools?: string;
+  followerMinimum?: number;
+  followerMaximum?: number;
   /*   tags?: string;
   skillsAndInterests?: string; */
 }
@@ -22,7 +25,7 @@ class AthleteController {
   ) {
     const athleteObj = req.body;
     try {
-      await Athletes.create({
+      await Athlete.create({
         ...athleteObj,
       });
     } catch (err: any) {
@@ -33,17 +36,31 @@ class AthleteController {
     });
   }
 
-  async getAthletes(req: Request<{}, {}, {}, GetAtletesQuery>, res: Response) {
+  async getAthletes(req: Request<{}, {}, {}, GetAthletesQuery>, res: Response) {
     const page = +(req.query.page || 1);
     const limit = +(req.query.limit || 3);
-    const { hometown, school } = req.query;
+    const { hometowns, schools, followerMaximum, followerMinimum } = req.query;
 
-    const athletes = await Athletes.find()
-    .limit(limit * 1)
-    .skip((page - 1) * limit);
+    let filter: FilterQuery<IAthleteProfile> = {};
 
+    if (hometowns) {
+      filter.hometown = { $in: hometowns };
+    }
+    if (schools) {
+      filter.school = { $in: schools };
+    }
+    if (followerMinimum || followerMaximum) {
+      filter["instagram.followerCount"] = {
+        $gt: followerMinimum ?? 0,
+        $lt: followerMaximum ?? Infinity,
+      };
+    }
 
-    const totalCount = await Athletes.count();
+    const athletes = await Athlete.find(filter)
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+
+    const totalCount = await Athlete.count();
     const totalPage = Math.ceil(totalCount / limit);
 
     return res.status(200).json({ athletes: { data: athletes, totalPage } });
@@ -51,7 +68,7 @@ class AthleteController {
 
   async getFiltersData(req: Request, res: Response<any, IAuthLocals>) {
     try {
-      const data = await Athletes.aggregate([
+      const data = await Athlete.aggregate([
         {
           $group: {
             _id: {
@@ -86,3 +103,4 @@ class AthleteController {
 }
 
 export default new AthleteController();
+

@@ -1,0 +1,68 @@
+[
+  {
+    "description": "asdjasjasd",
+    "hometown": "Istanbul",
+    "instagram": {
+      "followerCount": "15K",
+      "link": "https://instagram.com/instagram"
+    },
+    "marketability": "A+",
+    "rating": 5,
+    "reach": "99",
+    "school": "Istanbul School",
+    "skillsAndInterests": ["basketball", "tennis"],
+    "shopLink": "https://youtube.com",
+    "type": "elite",
+    "tags": ["tag1", "tag2", "tag3"],
+    "stats": [
+      {
+        "name": "stat1",
+        "value": "good"
+      }
+    ]
+  },
+  {
+    "description": "asdjasjasd",
+    "hometown": "Ankara",
+    "instagram": {
+      "followerCount": "15K",
+      "link": "https://instagram.com/instagram"
+    },
+    "marketability": "A+",
+    "rating": 5,
+    "reach": "99",
+    "school": "Ankara School",
+    "skillsAndInterests": ["running", "swimming"],
+    "shopLink": "https://youtube.com",
+    "type": "elite",
+    "tags": ["tag1", "tag2", "tag3"],
+    "stats": [
+      {
+        "name": "stat1",
+        "value": "good"
+      }
+    ]
+  },
+  {
+    "description": "asdjasjasd",
+    "hometown": "New York",
+    "instagram": {
+      "followerCount": "65K",
+      "link": "https://instagram.com/instagram"
+    },
+    "marketability": "A+",
+    "rating": 5,
+    "reach": "99",
+    "school": "New York School",
+    "skillsAndInterests": ["walking", "hunting"],
+    "shopLink": "https://youtube.com",
+    "type": "elite",
+    "tags": ["tagHello", "viral", "AWESOME"],
+    "stats": [
+      {
+        "name": "Learning",
+        "value": "good"
+      }
+    ]
+  }
+]

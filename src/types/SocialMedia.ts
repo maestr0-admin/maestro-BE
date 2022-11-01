@@ -1,6 +1,6 @@
 interface ISocialMedia {
   link: string;
-  followerCount: string;
+  followerCount: number;
 }
 
 export default ISocialMedia;
