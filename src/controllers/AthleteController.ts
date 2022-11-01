@@ -7,6 +7,12 @@ import IAuthLocals from "./../types/AuthLocals";
 interface GetAtletesQuery {
   page?: string;
   limit?: string;
+  /*   minFollowers?: string;
+  maxFollowers?: string; */
+  hometown?: string;
+  school?: string;
+  /*   tags?: string;
+  skillsAndInterests?: string; */
 }
 
 class AthleteController {
@@ -30,13 +36,17 @@ class AthleteController {
   async getAthletes(req: Request<{}, {}, {}, GetAtletesQuery>, res: Response) {
     const page = +(req.query.page || 1);
     const limit = +(req.query.limit || 3);
+    const { hometown, school } = req.query;
 
-    let athleteDocs = await Athletes.find()
-      .limit(limit * 1)
-      .skip((page - 1) * limit);
-    return res.status(200).json({
-      athletes: athleteDocs,
-    });
+    const athletes = await Athletes.find()
+    .limit(limit * 1)
+    .skip((page - 1) * limit);
+
+
+    const totalCount = await Athletes.count();
+    const totalPage = Math.ceil(totalCount / limit);
+
+    return res.status(200).json({ athletes: { data: athletes, totalPage } });
   }
 
   async getFiltersData(req: Request, res: Response<any, IAuthLocals>) {
