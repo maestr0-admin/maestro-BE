@@ -29,8 +29,6 @@ class AthleteController {
 
   async getAthletes(req: Request<{}, {}, {}, GetAtletesQuery>, res: Response) {
     const page = +(req.query.page || 1);
-    
-    
     const limit = +(req.query.limit || 3);
 
     let athleteDocs = await Athletes.find()
