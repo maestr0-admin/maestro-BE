@@ -63,12 +63,12 @@ class AthleteController {
       .limit(limit * 1)
       .skip((page - 1) * limit);
 
-    const totalCount = await Athlete.count();
+    const totalCount = await Athlete.count(filter);
     const totalPage = Math.ceil(totalCount / limit);
 
     return res
       .status(200)
-      .json({ athletes: { data: athletes, totalPage, hometowns, schools } });
+      .json({ athletes: { data: athletes, totalPage } });
   }
 
   async getFiltersData(req: Request, res: Response<any, IAuthLocals>) {
