@@ -38,15 +38,18 @@ class AthleteController {
 
   async getAthletes(req: Request<{}, {}, {}, GetAthletesQuery>, res: Response) {
     const page = +(req.query.page || 1);
-    const limit = +(req.query.limit || 3);
-    const { hometowns, schools, followerMaximum, followerMinimum } = req.query;
+    const limit = +(req.query.limit || 9);
+    let { hometowns, schools, followerMaximum, followerMinimum } = req.query;
+    if (hometowns && typeof hometowns === "string")
+      hometowns = JSON.parse(hometowns);
+    if (schools && typeof schools === "string") schools = JSON.parse(schools);
 
     let filter: FilterQuery<IAthleteProfile> = {};
 
-    if (hometowns) {
+    if (hometowns?.length) {
       filter.hometown = { $in: hometowns };
     }
-    if (schools) {
+    if (schools?.length) {
       filter.school = { $in: schools };
     }
     if (followerMinimum || followerMaximum) {
@@ -63,7 +66,9 @@ class AthleteController {
     const totalCount = await Athlete.count();
     const totalPage = Math.ceil(totalCount / limit);
 
-    return res.status(200).json({ athletes: { data: athletes, totalPage } });
+    return res
+      .status(200)
+      .json({ athletes: { data: athletes, totalPage, hometowns, schools } });
   }
 
   async getFiltersData(req: Request, res: Response<any, IAuthLocals>) {
@@ -103,4 +108,3 @@ class AthleteController {
 }
 
 export default new AthleteController();
-
