@@ -19,7 +19,8 @@
         "name": "stat1",
         "value": "good"
       }
-    ]
+    ],
+    "backgroundImage": "https://picsum.photos/seed/seed1/200/300"
   },
   {
     "description": "asdjasjasd",
@@ -41,7 +42,8 @@
         "name": "stat1",
         "value": "good"
       }
-    ]
+    ],
+    "backgroundImage": "https://picsum.photos/seed/seed2/200/300"
   },
   {
     "description": "asdjasjasd",
@@ -63,6 +65,7 @@
         "name": "Learning",
         "value": "good"
       }
-    ]
+    ],
+    "backgroundImage": "https://picsum.photos/seed/seed3/200/300"
   }
 ]
