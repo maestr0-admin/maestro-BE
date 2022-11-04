@@ -16,7 +16,7 @@ const socialSchema = new Schema<ISocialMedia>({
 const athleteSchema = new Schema<IAthleteProfile>({
   type: { type: String, required: true },
   rating: { type: Number, required: true },
-  shopLink: { type: String, required: true },
+  shopLink: { type: String },
   profileLink: { type: String },
   description: { type: String, required: true },
   hometown: { type: String, required: true },
@@ -30,10 +30,10 @@ const athleteSchema = new Schema<IAthleteProfile>({
   youtube: { type: [socialSchema], required: true },
   stats: [statSchema],
   skillsAndInterests: { type: [String], required: true },
+  sport: { type: String, required: true },
   backgroundImage: { type: String, required: true, default: "No Image" },
 });
 
 const Athlete = model<IAthleteProfile>("Athlete", athleteSchema);
 
 export default Athlete;
-
