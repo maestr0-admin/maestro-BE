@@ -13,6 +13,7 @@ interface GetAthletesQuery {
   followerMinimum?: number;
   followerMaximum?: number;
   sports?: string;
+  tags?: string;
 }
 
 class AthleteController {
@@ -36,20 +37,24 @@ class AthleteController {
   async getAthletes(req: Request<{}, {}, {}, GetAthletesQuery>, res: Response) {
     const page = +(req.query.page || 1);
     const limit = +(req.query.limit || 9);
-    let { hometowns, schools, sports, followerMaximum, followerMinimum } =
+    let { hometowns, schools, sports, tags, followerMaximum, followerMinimum } =
       req.query;
     if (hometowns && typeof hometowns === "string")
       hometowns = JSON.parse(hometowns);
     if (sports && typeof sports === "string") sports = JSON.parse(sports);
+    if (tags && typeof tags === "string") tags = JSON.parse(tags);
     if (schools && typeof schools === "string") schools = JSON.parse(schools);
 
-    let filter: FilterQuery<IAthleteProfile> = {};
+    const filter: FilterQuery<IAthleteProfile> = {};
 
     if (hometowns?.length) {
       filter.hometown = { $in: hometowns };
     }
     if (sports?.length) {
       filter.sport = { $in: sports };
+    }
+    if (tags?.length) {
+      filter.tags = { $in: tags };
     }
     if (schools?.length) {
       filter.school = { $in: schools };
