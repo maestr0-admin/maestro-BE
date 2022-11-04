@@ -3,7 +3,7 @@
     "description": "asdjasjasd",
     "hometown": "Istanbul",
     "instagram": {
-      "followerCount": "15K",
+      "followerCount": 15000,
       "link": "https://instagram.com/instagram"
     },
     "marketability": "A+",
@@ -19,13 +19,15 @@
         "name": "stat1",
         "value": "good"
       }
-    ]
+    ],
+    "sport": "Track and field",
+    "backgroundImage": "https://picsum.photos/seed/seed1/200/300"
   },
   {
     "description": "asdjasjasd",
     "hometown": "Ankara",
     "instagram": {
-      "followerCount": "15K",
+      "followerCount": 500,
       "link": "https://instagram.com/instagram"
     },
     "marketability": "A+",
@@ -41,13 +43,15 @@
         "name": "stat1",
         "value": "good"
       }
-    ]
+    ],
+    "sport": "Football",
+    "backgroundImage": "https://picsum.photos/seed/seed2/200/300"
   },
   {
     "description": "asdjasjasd",
     "hometown": "New York",
     "instagram": {
-      "followerCount": "65K",
+      "followerCount": 65000,
       "link": "https://instagram.com/instagram"
     },
     "marketability": "A+",
@@ -63,6 +67,8 @@
         "name": "Learning",
         "value": "good"
       }
-    ]
+    ],
+    "sport": "Basketball",
+    "backgroundImage": "https://picsum.photos/seed/seed3/200/300"
   }
 ]

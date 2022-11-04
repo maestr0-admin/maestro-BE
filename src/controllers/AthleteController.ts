@@ -8,14 +8,12 @@ import { FilterQuery } from "mongoose";
 interface GetAthletesQuery {
   page?: string;
   limit?: string;
-  /*   minFollowers?: string;
-  maxFollowers?: string; */
   hometowns?: string;
   schools?: string;
   followerMinimum?: number;
   followerMaximum?: number;
-  /*   tags?: string;
-  skillsAndInterests?: string; */
+  sports?: string;
+  tags?: string;
 }
 
 class AthleteController {
@@ -39,15 +37,24 @@ class AthleteController {
   async getAthletes(req: Request<{}, {}, {}, GetAthletesQuery>, res: Response) {
     const page = +(req.query.page || 1);
     const limit = +(req.query.limit || 9);
-    let { hometowns, schools, followerMaximum, followerMinimum } = req.query;
+    let { hometowns, schools, sports, tags, followerMaximum, followerMinimum } =
+      req.query;
     if (hometowns && typeof hometowns === "string")
       hometowns = JSON.parse(hometowns);
+    if (sports && typeof sports === "string") sports = JSON.parse(sports);
+    if (tags && typeof tags === "string") tags = JSON.parse(tags);
     if (schools && typeof schools === "string") schools = JSON.parse(schools);
 
-    let filter: FilterQuery<IAthleteProfile> = {};
+    const filter: FilterQuery<IAthleteProfile> = {};
 
     if (hometowns?.length) {
       filter.hometown = { $in: hometowns };
+    }
+    if (sports?.length) {
+      filter.sport = { $in: sports };
+    }
+    if (tags?.length) {
+      filter.tags = { $in: tags };
     }
     if (schools?.length) {
       filter.school = { $in: schools };
@@ -68,7 +75,7 @@ class AthleteController {
 
     return res
       .status(200)
-      .json({ athletes: { data: athletes, totalPage } });
+      .json({ athletes: { data: athletes, totalPage, totalCount } });
   }
 
   async getFiltersData(req: Request, res: Response<any, IAuthLocals>) {
@@ -80,7 +87,7 @@ class AthleteController {
               school: "$school",
               hometown: "$hometown",
               tags: "$tags",
-              skillsAndInterests: "$skillsAndInterests",
+              sport: "$sport",
             },
           },
         },
@@ -88,18 +95,18 @@ class AthleteController {
       const schools = [];
       const hometowns = [];
       const tags = [];
-      const skillsAndInterests = [];
+      const sports = [];
       for (const value of data) {
         schools.push(value._id.school);
         hometowns.push(value._id.hometown);
         tags.push(value._id.tags);
-        skillsAndInterests.push(value._id.skillsAndInterests);
+        sports.push(value._id.sport);
       }
       return res.status(200).json({
         schools,
         hometowns,
         tags: [...new Set(tags.flat(Infinity))],
-        skillsAndInterests: [...new Set(skillsAndInterests.flat(Infinity))],
+        sports: [...new Set(sports.flat(Infinity))],
       });
     } catch (err: any) {
       return sendValidationError(res, err);
