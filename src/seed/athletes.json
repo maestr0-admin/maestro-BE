@@ -20,6 +20,7 @@
         "value": "good"
       }
     ],
+    "sport": "Track and field",
     "backgroundImage": "https://picsum.photos/seed/seed1/200/300"
   },
   {
@@ -43,6 +44,7 @@
         "value": "good"
       }
     ],
+    "sport": "Football",
     "backgroundImage": "https://picsum.photos/seed/seed2/200/300"
   },
   {
@@ -66,6 +68,7 @@
         "value": "good"
       }
     ],
+    "sport": "Basketball",
     "backgroundImage": "https://picsum.photos/seed/seed3/200/300"
   }
 ]
