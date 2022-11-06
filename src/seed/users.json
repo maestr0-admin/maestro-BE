@@ -1,0 +1,29 @@
+[
+  {
+    "profileId": "6364fa3c1b27204a3a17aaed",
+    "name": "Corbin Carroll",
+    "email": "corbin.carroll@mail.com",
+    "type": "athlete",
+    "favoriteAthletes": [],
+    "phoneNumber": "phoneNumber 1",
+    "uid": "1d038070-5ded-11ed-9b6a-0242ac120002"
+  },
+  {
+    "profileId": "6364fa3c1b27204a3a17aaee",
+    "name": "Paolo Banchero",
+    "email": "paolo.banchero@mail.com",
+    "type": "athlete",
+    "favoriteAthletes": [],
+    "phoneNumber": "phoneNumber 2",
+    "uid": "25b7bb46-5ded-11ed-9b6a-0242ac120002"
+  },
+  {
+    "profileId": "6364fa3c1b27204a3a17aaef",
+    "name": "Haley Jones",
+    "email": "haley.jones@mail.com",
+    "type": "athlete",
+    "favoriteAthletes": [],
+    "phoneNumber": "phoneNumber 3",
+    "uid": "27ccb882-5ded-11ed-9b6a-0242ac120002"
+  }
+]
