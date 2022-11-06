@@ -73,9 +73,17 @@ class AthleteController {
     const totalCount = await Athlete.count(filter);
     const totalPage = Math.ceil(totalCount / limit);
 
-    return res
-      .status(200)
-      .json({ athletes: { data: athletes, totalPage, totalCount } });
+    return res.status(200).json({
+      athletes: {
+        data: athletes.map((a) => ({
+          ...a.toJSON(),
+          _id: undefined,
+          id: a.id,
+        })),
+        totalPage,
+        totalCount,
+      },
+    });
   }
 
   async getFiltersData(req: Request, res: Response<any, IAuthLocals>) {
