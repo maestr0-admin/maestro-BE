@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { sendValidationError } from "../helpers/requestHelpers";
 import Athlete from "../models/Athlete";
+import User from "../models/User";
 import IAthleteProfile from "../types/AthleteProfile";
 import IAuthLocals from "./../types/AuthLocals";
-import queryString from "query-string";
 import { FilterQuery } from "mongoose";
+
 interface GetAthletesQuery {
   page?: string;
   limit?: string;
@@ -69,13 +70,30 @@ class AthleteController {
     const athletes = await Athlete.find(filter)
       .limit(limit * 1)
       .skip((page - 1) * limit);
+    const userIds = athletes.map((a) => a.id);
+    const users = await User.find({ profileId: { $in: userIds } });
 
     const totalCount = await Athlete.count(filter);
     const totalPage = Math.ceil(totalCount / limit);
 
-    return res
-      .status(200)
-      .json({ athletes: { data: athletes, totalPage, totalCount } });
+    return res.status(200).json({
+      athletes: {
+        data: athletes.map((a) => ({
+          ...a.toJSON(),
+          _id: undefined,
+          id: a.id,
+        })),
+        users: users.reduce(
+          (acc, cur) => ({
+            ...acc,
+            [cur.profileId]: { ...cur.toJSON(), _id: undefined, id: cur.id },
+          }),
+          {}
+        ),
+        totalPage,
+        totalCount,
+      },
+    });
   }
 
   async getFiltersData(req: Request, res: Response<any, IAuthLocals>) {

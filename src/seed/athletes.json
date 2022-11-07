@@ -1,13 +1,28 @@
 [
   {
+    "_id": {
+      "$oid": "6364fa3c1b27204a3a17aaed"
+    },
     "description": "asdjasjasd",
     "hometown": "Istanbul",
     "instagram": {
       "followerCount": 15000,
       "link": "https://instagram.com/instagram"
     },
+    "twitter": {
+      "followerCount": 56,
+      "link": "https://twitter.com/twitter"
+    },
+    "youtube": {
+      "followerCount": 230845,
+      "link": "https://youtube.com"
+    },
+    "tiktok": {
+      "followerCount": 39854,
+      "link": "https://tiktok.com"
+    },
     "marketability": "A+",
-    "rating": 5,
+    "rating": 4.8,
     "reach": "99",
     "school": "Istanbul School",
     "skillsAndInterests": ["basketball", "tennis"],
@@ -24,6 +39,9 @@
     "backgroundImage": "https://picsum.photos/seed/seed1/200/300"
   },
   {
+    "_id": {
+      "$oid": "6364fa3c1b27204a3a17aaee"
+    },
     "description": "asdjasjasd",
     "hometown": "Ankara",
     "instagram": {
@@ -31,7 +49,7 @@
       "link": "https://instagram.com/instagram"
     },
     "marketability": "A+",
-    "rating": 5,
+    "rating": 4.0,
     "reach": "99",
     "school": "Ankara School",
     "skillsAndInterests": ["running", "swimming"],
@@ -48,6 +66,9 @@
     "backgroundImage": "https://picsum.photos/seed/seed2/200/300"
   },
   {
+    "_id": {
+      "$oid": "6364fa3c1b27204a3a17aaef"
+    },
     "description": "asdjasjasd",
     "hometown": "New York",
     "instagram": {
@@ -55,7 +76,7 @@
       "link": "https://instagram.com/instagram"
     },
     "marketability": "A+",
-    "rating": 5,
+    "rating": 4.5,
     "reach": "99",
     "school": "New York School",
     "skillsAndInterests": ["walking", "hunting"],
