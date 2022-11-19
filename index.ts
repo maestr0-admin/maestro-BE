@@ -5,16 +5,14 @@ import "./src/config/mongoose";
 import "./src/config/configureFirebase";
 import apiRouter from "./src/routes/ApiRouter";
 import athleteRouter from "./src/routes/AthleteRouter";
+import chatRouter from "./src/routes/ChatRouter";
 import cors from "cors";
 
 const port = process.env.PORT;
 
 const app: Express = express();
 
-app.use(express.json())
-
-
-
+app.use(express.json());
 
 const corsOptions = {
   origin: "https://maestro-zeta.vercel.app",
@@ -24,6 +22,7 @@ const corsOptions = {
 app.use(cors());
 app.use("/api", apiRouter);
 app.use("/api/athlete", athleteRouter);
+app.use("/api/chat", chatRouter);
 
 // // Create an HTTP service.
 // http.createServer(app).listen(port);

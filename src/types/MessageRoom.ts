@@ -5,4 +5,5 @@ interface IMessageRoom extends IEntity {
   participants: string[];
   createdAt: Date;
 }
+
 export default IMessageRoom;
