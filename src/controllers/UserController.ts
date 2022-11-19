@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { sendValidationError } from "../helpers/requestHelpers";
+import Brand from "../models/Brand";
 import User from "../models/User";
 import IAuthLocals from "../types/AuthLocals";
 import IUser from "../types/User";
@@ -41,8 +42,8 @@ class UserController {
     res: Response<any, IAuthLocals>
   ) {
     const { phone, uid, email } = res.locals.user;
-    console.log(res.locals.user)
-    console.log('res.locals.user')
+    console.log(res.locals.user);
+    console.log("res.locals.user");
     const { accountType } = req.body;
     if (accountType === "athlete") {
       let userDoc = await User.findOne({
@@ -62,10 +63,12 @@ class UserController {
         },
       });
     } else {
+      const brand = await Brand.create({});
       await User.create({
         email,
         uid,
         type: "brand",
+        profileId: brand._id,
       });
     }
 
@@ -77,4 +80,3 @@ class UserController {
 }
 
 export default new UserController();
-
