@@ -63,7 +63,10 @@ class UserController {
         },
       });
     } else {
-      const brand = await Brand.create({});
+      console.log('creating branndd')
+      const brand = await Brand.create({
+        email,
+      });
       await User.create({
         email,
         uid,
@@ -80,3 +83,4 @@ class UserController {
 }
 
 export default new UserController();
+

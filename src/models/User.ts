@@ -9,10 +9,12 @@ const userSchema = new Schema<IUser>(
     phoneNumber: {
       type: String,
       unique: true,
+      sparse: true,
     },
     email: {
       type: String,
       unique: true,
+      sparse: true,
     },
     uid: { type: String, required: true, unique: true },
     avatar: String,
@@ -27,3 +29,4 @@ const userSchema = new Schema<IUser>(
 const User = model<IUser>("User", userSchema);
 
 export default User;
+

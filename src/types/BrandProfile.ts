@@ -2,8 +2,7 @@ import IEntity from './Entity';
 
 interface IBrandProfile extends IEntity {
   id: string;
-  phoneNumber: string;
-  type: string;
+  email: string;
   description: string;
   location: string;
   size: string;
