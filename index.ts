@@ -1,4 +1,6 @@
 import express, { Express, Request, Response } from "express";
+import http from "http";
+import { Server } from "socket.io";
 import dotenv from "dotenv";
 dotenv.config();
 import "./src/config/mongoose";
@@ -7,11 +9,11 @@ import apiRouter from "./src/routes/ApiRouter";
 import athleteRouter from "./src/routes/AthleteRouter";
 import chatRouter from "./src/routes/ChatRouter";
 import cors from "cors";
+import socket from "./src/utils/socket";
 
 const port = process.env.PORT;
 
 const app: Express = express();
-
 app.use(express.json());
 
 const corsOptions = {
@@ -25,7 +27,18 @@ app.use("/api/athlete", athleteRouter);
 app.use("/api/chat", chatRouter);
 
 // // Create an HTTP service.
-// http.createServer(app).listen(port);
+const server = http.createServer(app).listen(9000, () => {
+  console.log(`⚡️[socket]: listening on http://localhost:9000`);
+});
+
+const io = new Server(server, {
+  cors: {
+    origin: "localhost:3000",
+  },
+});
+
+//@ts-ignore
+socket(io);
 // // Create an HTTPS service identical to the HTTP service.
 // // https.createServer(options, app).listen(port);
 

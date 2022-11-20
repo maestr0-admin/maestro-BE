@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import { sendValidationError } from "../helpers/requestHelpers";
-import messageRoom from "../models/MessageRoom";
+import MessageRoom from "../models/MessageRoom";
+import Message from "../models/Message";
 import User from "../models/User";
 import IAuthLocals from "../types/AuthLocals";
+import IMessage from "../types/Message";
+import IMessageRoom from "../types/MessageRoom";
 
 class ChatController {
-  async createChat(
+  async createRoom(
     req: Request<
       {},
       any,
@@ -16,63 +19,176 @@ class ChatController {
     res: Response<any, IAuthLocals>
   ) {
     const { id } = req.body;
-    const { uid: currentUserId } = res.locals.user;
+    const { uid } = res.locals.user;
     try {
-      const user = await User.findOne({ uid: id });
-      const currentUser = await User.findOne({ uid: currentUserId });
+      const receiver = await User.findOne({ uid: id });
+      const user = await User.findOne({ uid });
 
-      if (!user || !currentUser)
+      if (!receiver || !user)
         return res.status(404).json({
           message: "User not found",
         });
 
-      //check if chat already exists
-      let chatDoc = await messageRoom.findOne({
+      let exists = await MessageRoom.findOne({
         participants: {
-          $all: [currentUser._id, user._id],
+          $all: [user._id, receiver._id],
         },
       });
 
-      if (chatDoc) {
+      if (exists) {
         return res.status(200).json({
           message: "Chat already exists",
         });
       }
 
-      const chat = await messageRoom.create({
-        participants: [currentUser._id, user._id],
+      await MessageRoom.create({
+        participants: [user._id, receiver._id],
       });
 
       return res.status(201).json({
-        id: chat._id,
+        message: "Chat created",
       });
     } catch (err: any) {
       return sendValidationError(res, err);
     }
   }
 
-  async getChats(req: Request, res: Response<any, IAuthLocals>) {
-    const { uid } = res.locals.user;
+  async getMessageRooms(
+    req: Request<{}, any, IMessageRoom>,
+    res: Response<any, IAuthLocals>
+  ) {
+    try {
+      const { uid } = res.locals.user;
 
-    const user = await User.findOne({ uid });
-    if (!user)
-      return res.status(404).json({
-        message: "User not found",
+      const user = await User.findOne({ uid });
+      if (!user)
+        return res.status(404).json({
+          message: "User not found",
+        });
+
+      let messageRooms = await MessageRoom.find({
+        participants: {
+          $in: [user._id],
+        },
       });
 
-    let chatDoc = await messageRoom.find({
-      participants: {
-        $in: [user?._id],
-      },
-    });
-    return res.status(200).json([
-      ...chatDoc.map((chat) => {
+      const response: IMessageRoom[] = messageRooms.map((chat) => {
         return {
-          id: chat._id,
+          id: chat._id.toString(),
           participants: chat.participants,
-        };
-      }),
-    ]);
+        } as IMessageRoom;
+      });
+
+      return res.status(200).json(response);
+    } catch (err: any) {
+      return sendValidationError(res, err);
+    }
+  }
+
+  async getMessages(
+    req: Request<
+      {
+        id: string;
+      },
+      IMessage
+    >,
+    res: Response<any, IAuthLocals>
+  ) {
+    try {
+      const { id } = req.params;
+      const { uid } = res.locals.user;
+
+      const user = await User.findOne({ uid });
+
+      if (!user)
+        return res.status(404).json({
+          message: "User not found",
+        });
+
+      const room = await MessageRoom.findOne({
+        _id: id,
+      });
+
+      if (!room)
+        return res.status(404).json({
+          message: "Chat not found",
+        });
+
+      const messages = await Message.find({
+        messageRoomId: room._id,
+      });
+
+      const response: IMessage[] = messages.map((message) => {
+        return {
+          id: message._id.toString(),
+          messageRoomId: message.messageRoomId.toString(),
+          message: message.message,
+          sender: message.sender,
+          receiver: message.receiver,
+          createdAt: message.createdAt,
+        } as IMessage;
+      });
+
+      return res.status(200).json(response);
+    } catch (err: any) {
+      return sendValidationError(res, err);
+    }
+  }
+
+  async sendMessage(
+    req: Request<
+      {},
+      IMessage,
+      {
+        id: string;
+        message: string;
+      }
+    >,
+    res: Response<any, IAuthLocals>
+  ) {
+    try {
+      const { uid } = res.locals.user;
+      const { id, message } = req.body;
+
+      const user = await User.findOne({ uid });
+
+      if (!user)
+        return res.status(404).json({
+          message: "User not found",
+        });
+
+      const chatDoc = await MessageRoom.findOne({
+        _id: id,
+        participants: {
+          $in: [user._id],
+        },
+      });
+
+      if (!chatDoc)
+        return res.status(404).json({
+          message: "Chat not found",
+        });
+
+      const newMessage = await Message.create({
+        messageRoomId: chatDoc._id,
+        message,
+        sender: user._id,
+        receiver: chatDoc.participants.filter(
+          (participant) => participant !== user._id.toString()
+        )[0],
+      });
+
+      return res.status(201).json({
+        id: newMessage._id.toString(),
+        messageRoomId: newMessage.messageRoomId.toString(),
+        message: newMessage.message,
+        sender: newMessage.sender,
+        receiver: newMessage.receiver,
+        createdAt: newMessage.createdAt,
+      });
+    } catch (err: any) {
+      return sendValidationError(res, err);
+    }
   }
 }
 

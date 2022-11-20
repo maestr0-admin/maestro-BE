@@ -4,8 +4,10 @@ import { authenticateIdToken } from "../middlewares/firebaseMiddlewares";
 
 const apiRouter = Router();
 
-apiRouter.post("", authenticateIdToken, ChatController.createChat);
+apiRouter.post("", authenticateIdToken, ChatController.createRoom);
+apiRouter.get("", authenticateIdToken, ChatController.getMessageRooms);
 
-apiRouter.get("", authenticateIdToken, ChatController.getChats);
+apiRouter.get("/message/:id", authenticateIdToken, ChatController.getMessages);
+apiRouter.post("/message", authenticateIdToken, ChatController.sendMessage);
 
 export default apiRouter;
