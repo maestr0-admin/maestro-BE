@@ -54,7 +54,7 @@ class ChatController {
   }
 
   async getMessageRooms(
-    req: Request<{}, any, IMessageRoom>,
+    req: Request<{}, any, IMessageRoom[]>,
     res: Response<any, IAuthLocals>
   ) {
     try {
@@ -66,17 +66,23 @@ class ChatController {
           message: "User not found",
         });
 
-      let messageRooms = await MessageRoom.find({
+      //update date nessasary for sorting
+
+      const rooms = await MessageRoom.find({
         participants: {
           $in: [user._id],
         },
-      });
+      })
+        .populate("participants")
+        .sort({ updatedAt: -1 });
 
-      const response: IMessageRoom[] = messageRooms.map((chat) => {
+      const response: IMessageRoom[] = rooms.map((room) => {
         return {
-          id: chat._id.toString(),
-          participants: chat.participants,
-        } as IMessageRoom;
+          id: room._id.toString(),
+          participants: room.participants,
+          createdAt: room.createdAt,
+          updatedAt: room.updatedAt,
+        };
       });
 
       return res.status(200).json(response);
@@ -157,23 +163,23 @@ class ChatController {
           message: "User not found",
         });
 
-      const chatDoc = await MessageRoom.findOne({
+      const room = await MessageRoom.findOne({
         _id: id,
         participants: {
           $in: [user._id],
         },
       });
 
-      if (!chatDoc)
+      if (!room)
         return res.status(404).json({
           message: "Chat not found",
         });
 
       const newMessage = await Message.create({
-        messageRoomId: chatDoc._id,
+        messageRoomId: room._id,
         message,
         sender: user._id,
-        receiver: chatDoc.participants.filter(
+        receiver: room.participants.filter(
           (participant) => participant !== user._id.toString()
         )[0],
       });

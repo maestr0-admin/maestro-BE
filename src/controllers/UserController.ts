@@ -5,6 +5,8 @@ import User from "../models/User";
 import IAuthLocals from "../types/AuthLocals";
 import IUser from "../types/User";
 
+import { upload } from "../helpers/awsController";
+
 class UserController {
   async createUser(
     req: Request<{}, any, IUser>,
@@ -63,7 +65,7 @@ class UserController {
         },
       });
     } else {
-      console.log('creating branndd')
+      console.log("creating branndd");
       const brand = await Brand.create({
         email,
       });
@@ -83,4 +85,3 @@ class UserController {
 }
 
 export default new UserController();
-

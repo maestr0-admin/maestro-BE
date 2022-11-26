@@ -7,7 +7,9 @@ import "./src/config/mongoose";
 import "./src/config/configureFirebase";
 import apiRouter from "./src/routes/ApiRouter";
 import athleteRouter from "./src/routes/AthleteRouter";
+import brandRouter from "./src/routes/BrandRouter";
 import chatRouter from "./src/routes/ChatRouter";
+import contractRouter from "./src/routes/ContractRouter";
 import cors from "cors";
 import socket from "./src/utils/socket";
 
@@ -24,7 +26,9 @@ const corsOptions = {
 app.use(cors());
 app.use("/api", apiRouter);
 app.use("/api/athlete", athleteRouter);
+app.use("/api/brand", brandRouter);
 app.use("/api/chat", chatRouter);
+app.use("/api/contract", contractRouter);
 
 // // Create an HTTP service.
 const server = http.createServer(app).listen(9000, () => {

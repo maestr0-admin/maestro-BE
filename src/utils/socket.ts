@@ -1,4 +1,5 @@
 import { Socket } from "socket.io";
+import SocketMessage from "../types/SocketMessage";
 import ISocketUser from "../types/SocketUser";
 
 let users: ISocketUser[] = [];
@@ -23,7 +24,7 @@ export default function socket(io: Socket) {
     });
 
     //send message
-    socket.on("sendMessage", (data: ISocketUser & { receiverId: string }) => {
+    socket.on("sendMessage", (data: SocketMessage & { receiverId: string }) => {
       console.log("sendMessage", data);
       const user = getUser(data.receiverId);
       if (user) io.to(user.socketId).emit("getMessage", data);
