@@ -8,7 +8,6 @@ const s3 = new AWS.S3({
   endpoint: spacesEndpoint,
   accessKeyId: process.env.DO_SPACES_KEY,
   secretAccessKey: process.env.DO_SPACES_SECRET,
-  
 });
 
 const whitelist = ["image/png", "image/jpeg", "image/jpg"];
@@ -23,9 +22,10 @@ const upload = multer({
       console.log(file);
       console.log("file");
       const extension = file.mimetype.split("/")[1];
-      const key = `${file.originalname}`;
+      const key = `${file.originalname}-${new Date().getTime()}`;
       cb(null, key);
     },
+    contentType: multerS3.AUTO_CONTENT_TYPE,
   }),
   limits: { fileSize: 10000000 },
   fileFilter: (req, file, cb) => {
@@ -39,3 +39,4 @@ const upload = multer({
 }).single("File");
 
 export { upload };
+
