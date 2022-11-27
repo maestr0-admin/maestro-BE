@@ -1,6 +1,6 @@
 interface SocketMessage {
-  senderId: string;
-  recevierId: string;
+  sender: string;
+  receiver: string;
   message: string;
   messageRoomId: string;
   createdAt: string;

@@ -24,9 +24,9 @@ export default function socket(io: Socket) {
     });
 
     //send message
-    socket.on("sendMessage", (data: SocketMessage & { receiverId: string }) => {
+    socket.on("sendMessage", (data: SocketMessage) => {
       console.log("sendMessage", data);
-      const user = getUser(data.receiverId);
+      const user = getUser(data.receiver);
       if (user) io.to(user.socketId).emit("getMessage", data);
     });
 

@@ -74,7 +74,7 @@ class ChatController {
         },
       })
         .populate("participants")
-        .sort({ updatedAt: -1 });
+        .sort({ updatedAt: 1 });
 
       const response: IMessageRoom[] = rooms.map((room) => {
         return {
