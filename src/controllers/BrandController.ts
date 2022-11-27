@@ -83,9 +83,56 @@ class BrandController {
       if (!id || !file)
         return res.status(400).json({ message: "Missing id or file" });
 
-     console.log(file);
+      const brand = await Brand.findByIdAndUpdate(
+        id,
+        // @ts-ignore
+        { backgroundPicture: file.location },
+        { new: true }
+      );
 
-     res.status(200).json({ message: "File uploaded successfully" });
+      if (!brand) return res.status(404).json({ message: "Brand not found" });
+
+      res.status(200).json({
+        id: brand._id,
+        email: brand.email,
+        description: brand.description,
+        location: brand.location,
+        size: brand.size,
+        tags: brand.tags,
+        backgroundPicture: brand.backgroundPicture,
+        profileLogo: brand.profileLogo,
+      });
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+  async uploadProfileLogo(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { file } = req;
+
+      if (!id || !file)
+        return res.status(400).json({ message: "Missing id or file" });
+
+      const brand = await Brand.findByIdAndUpdate(
+        id,
+        // @ts-ignore
+        { profileLogo: file.location },
+        { new: true }
+      );
+
+      if (!brand) return res.status(404).json({ message: "Brand not found" });
+
+      res.status(200).json({
+        id: brand._id,
+        email: brand.email,
+        description: brand.description,
+        location: brand.location,
+        size: brand.size,
+        tags: brand.tags,
+        backgroundPicture: brand.backgroundPicture,
+        profileLogo: brand.profileLogo,
+      });
     } catch (error) {
       res.status(500).json(error);
     }

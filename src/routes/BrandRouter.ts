@@ -9,6 +9,15 @@ apiRouter.post("", authenticateIdToken, BrandController.createBrand);
 apiRouter.get("/:id", authenticateIdToken, BrandController.getBrand);
 apiRouter.delete("/:id", authenticateIdToken, BrandController.deleteBrand);
 apiRouter.put("/:id", authenticateIdToken, BrandController.updateBrand);
-apiRouter.post("/upload/backgroundPicture/:id", upload, BrandController.uploadBackgroundPicture);
+apiRouter.post(
+  "/upload/backgroundPicture/:id",
+  upload,
+  BrandController.uploadBackgroundPicture
+);
+apiRouter.post(
+  "/upload/profileLogo/:id",
+  upload,
+  BrandController.uploadProfileLogo
+);
 
 export default apiRouter;
