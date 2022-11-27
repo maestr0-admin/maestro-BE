@@ -75,40 +75,17 @@ class BrandController {
     }
   }
 
-  async uploadBackgroundPicture(
-    req: Request<{ id: string }, IBrandProfile, { logo: string }>,
-    res: Response
-  ) {
+  async uploadBackgroundPicture(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      res.status(200).json({ message: "Upload successful" });
-      //@ts-ignore
-      //   const callback: NextFunction = async (err: any, data: any) => {
-      //     if (err) {
-      //       console.log("err", err);
-      //       return res.status(500).json(err);
-      //     }
-      //     const newBrand = await Brand.findByIdAndUpdate(
-      //       id,
-      //       { backgroundPicture: data.Location },
-      //       { new: true }
-      //     );
-      //     if (!newBrand)
-      //       return res.status(404).json({ message: "Brand not found" });
+      const { file } = req;
 
-      //     res.status(200).json({
-      //       id: newBrand._id,
-      //       email: newBrand.email,
-      //       description: newBrand.description,
-      //       location: newBrand.location,
-      //       size: newBrand.size,
-      //       tags: newBrand.tags,
-      //       backgroundPicture: newBrand.backgroundPicture,
-      //       profileLogo: newBrand.profileLogo,
-      //     });
-      //   };
-      //   const test = upload(req, res, callback);
-      //   console.log(test);
+      if (!id || !file)
+        return res.status(400).json({ message: "Missing id or file" });
+
+     console.log(file);
+
+     res.status(200).json({ message: "File uploaded successfully" });
     } catch (error) {
       res.status(500).json(error);
     }

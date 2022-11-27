@@ -17,8 +17,7 @@ apiRouter.post("/sign-up", authenticateIdToken, UserController.signUp);
 apiRouter.post("/test", upload, (req, res) => {
   console.log(req.file);
   console.log("req.file");
-  res.send('a')
+  res.send("a");
 });
 
 export default apiRouter;
-
