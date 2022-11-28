@@ -1,7 +1,6 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import Brand from "../models/Brand";
 import IBrandProfile from "../types/BrandProfile";
-import { upload } from "../helpers/awsController";
 
 class BrandController {
   async getBrand(req: Request<{ id: string }, IBrandProfile>, res: Response) {
