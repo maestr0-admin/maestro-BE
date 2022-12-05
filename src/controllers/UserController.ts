@@ -74,7 +74,7 @@ class UserController {
         uid,
         type: "brand",
         profileId: brand._id,
-        phoneNumber: "phonenumber brand",
+        phoneNumber: brand._id,
       });
     }
 
