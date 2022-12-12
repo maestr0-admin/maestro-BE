@@ -74,11 +74,11 @@ class UserController {
         uid,
         type: "brand",
         profileId: brand._id,
-        phoneNumber: "phonenumber brand",
+        phoneNumber: Math.floor(Math.random() * 10000000000),
       });
     }
 
-    return res.status(200).send({ 
+    return res.status(200).send({
       code: "sign_up_success",
       message: "Sign up successfull",
     });

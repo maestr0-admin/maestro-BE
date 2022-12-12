@@ -16,7 +16,7 @@ async function authenticateIdToken(
     res.locals.user = {
       uid: result.uid,
       phone: result.phone_number,
-      email:result.email
+      email: result.email,
     };
     return next();
   } catch (err) {
@@ -26,4 +26,3 @@ async function authenticateIdToken(
 }
 
 export { authenticateIdToken };
-
