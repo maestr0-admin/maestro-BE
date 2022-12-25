@@ -34,6 +34,20 @@ class UserController {
     let userDoc = await User.findOne({
       uid,
     });
+    if (!userDoc) {
+      return res.status(401).send({
+        code: "user_not_found",
+        message: "User not found",
+      });
+    }
+    const { profileId, type } = userDoc;
+    if (type === "brand") {
+      const profile = await Brand.findById(profileId);
+      if (profile) {
+        userDoc.name = profile.name;
+      }
+    }
+
     return res.status(200).json({
       user: userDoc,
     });
