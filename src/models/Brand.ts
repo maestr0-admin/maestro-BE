@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 import IBrandProfile from "../types/BrandProfile";
 
 const brandSchema = new Schema<IBrandProfile>({
+  name: { type: String },
   email: { type: String },
   description: { type: String },
   location: { type: String },

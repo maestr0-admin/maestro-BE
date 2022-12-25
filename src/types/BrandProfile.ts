@@ -1,7 +1,8 @@
-import IEntity from './Entity';
+import IEntity from "./Entity";
 
 interface IBrandProfile extends IEntity {
   id: string;
+  name: string;
   email: string;
   description: string;
   location: string;

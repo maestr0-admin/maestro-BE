@@ -13,6 +13,7 @@ class BrandController {
 
       return res.status(200).json({
         id: brand._id,
+        name: brand.name,
         email: brand.email,
         description: brand.description,
         location: brand.location,
@@ -55,12 +56,14 @@ class BrandController {
     try {
       const { id } = req.params;
       const brand = req.body;
+
       const newBrand = await Brand.findByIdAndUpdate(id, brand, { new: true });
       if (!newBrand)
         return res.status(404).json({ message: "Brand not found" });
 
       res.status(200).json({
         id: newBrand._id,
+        name: newBrand.name,
         email: newBrand.email,
         description: newBrand.description,
         location: newBrand.location,
