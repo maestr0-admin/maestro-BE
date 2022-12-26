@@ -19,6 +19,7 @@ const userSchema = new Schema<IUser>(
     uid: { type: String, required: true, unique: true },
     avatar: String,
     profileId: { type: String, required: true, unique: true },
+    favoriteAthletes: [{ type: Schema.Types.ObjectId, ref: "Athlete" }],
   },
   {
     timestamps: true,
@@ -29,4 +30,3 @@ const userSchema = new Schema<IUser>(
 const User = model<IUser>("User", userSchema);
 
 export default User;
-
