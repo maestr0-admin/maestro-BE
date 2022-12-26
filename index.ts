@@ -10,6 +10,7 @@ import athleteRouter from "./src/routes/AthleteRouter";
 import brandRouter from "./src/routes/BrandRouter";
 import chatRouter from "./src/routes/ChatRouter";
 import contractRouter from "./src/routes/ContractRouter";
+import favoriteAthleteRouter from "./src/routes/FavoriteAthleteRouter";
 import cors from "cors";
 import socket from "./src/utils/socket";
 
@@ -29,6 +30,7 @@ app.use("/api/athlete", athleteRouter);
 app.use("/api/brand", brandRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/contract", contractRouter);
+app.use("/api/user/favorite-athletes", favoriteAthleteRouter);
 
 // // Create an HTTP service.
 const server = http.createServer(app).listen(9000, () => {
