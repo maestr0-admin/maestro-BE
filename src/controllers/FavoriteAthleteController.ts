@@ -67,7 +67,11 @@ class FavoriteAthleteController {
           $in: user.favoriteAthletes,
         },
       });
-      user.favoriteAthletes = athletes;
+      user.favoriteAthletes = athletes.map((a) => ({
+        ...a.toJSON(),
+        _id: undefined,
+        id: a.id,
+      }));
     }
 
     return res.status(200).json({
