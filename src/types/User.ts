@@ -1,3 +1,4 @@
+import IAthleteProfile from "./AthleteProfile";
 import IEntity from "./Entity";
 // 1. Create an interface representing a document in MongoDB.
 interface IUser extends IEntity {
@@ -9,6 +10,6 @@ interface IUser extends IEntity {
   type: "athlete" | "brand";
   avatar?: string;
   profileId: string;
-  favoriteAthletes?: string[];
+  favoriteAthletes?: IAthleteProfile[];
 }
 export default IUser;

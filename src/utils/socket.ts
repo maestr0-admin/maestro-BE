@@ -16,23 +16,23 @@ const getUser = (userId: string): ISocketUser | undefined => {
 
 export default function socket(io: Socket) {
   io.on("connection", (socket) => {
-    console.log("connected");
+    // console.log("connected");
     //connect
     socket.on("addUser", (senderId: string) => {
-      console.log("addUser", senderId);
+      // console.log("addUser", senderId);
       addUser(senderId, socket.id);
     });
 
     //send message
     socket.on("sendMessage", (data: SocketMessage) => {
-      console.log("sendMessage", data);
+      // console.log("sendMessage", data);
       const user = getUser(data.receiver);
       if (user) io.to(user.socketId).emit("getMessage", data);
     });
 
     //disconnect
     socket.on("disconnect", () => {
-      console.log("disconnected");
+      // console.log("disconnected");
       removeUser(socket.id);
     });
   });
